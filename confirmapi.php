@@ -5,10 +5,12 @@ require 'functions.php';
 function registerCode () {
 	global $con;
 	
-	$stmt = $con->prepare('SELECT request_code FROM api_keys WHERE api_name = ?');
-	$stmt->execute(array('80613-1e78f4859bf18a4fd2acd8b0'));
+	$stmt = $con->prepare('SELECT request_code FROM api_keys WHERE consumer_key = ?');
+	$stmt->execute(array(CONSUMER_KEY));
 	$code = $stmt->fetch(PDO::FETCH_NUM)[0];
 	
+	print_r($code);
+
 	$curl = curl_init();
 	
 	if (!$curl) {
