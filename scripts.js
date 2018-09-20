@@ -32,7 +32,7 @@ function modify(e) {
 	let xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById("recentPosts").innerHTML = this.responseText;
+//				document.getElementById("recentPosts").innerHTML = this.responseText;
 			}
 		};
 		xmlhttp.open("GET", "getrecent.php", true);
@@ -43,10 +43,20 @@ function modify(e) {
 }
 
 function deleteItem(e) {
-	console.log(e.target.parentElement.parentElement.firstElementChild);
+	let item_id = e.target.nextElementSibling.value;
+
+	let xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+//				document.getElementById("recentPosts").innerHTML = this.responseText;
+			}
+		};
+		xmlhttp.open("GET", "delete.php?id=" + item_id, true);
+
+		xmlhttp.send();
+
 	let img = e.target.parentElement.parentElement.firstElementChild;
 	e.target.parentElement.parentElement.removeChild(img);
 	e.target.parentElement.innerHTML = '<h5 class="card-title text-danger text-center">Item deleted</p>';
-//	document.getElementById("recentPosts").innerHTML = this.responseText;
 	e.preventDefault();
 }

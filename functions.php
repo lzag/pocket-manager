@@ -2,7 +2,7 @@
 
 require 'dbconfig.php';
 
-const CONSUMER_KEY = '	80613-c75e5b2f359c163253b130ff';
+const CONSUMER_KEY = '80613-c75e5b2f359c163253b130ff';
 
 try
 {

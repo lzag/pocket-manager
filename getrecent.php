@@ -6,7 +6,7 @@ function getRecent() {
 	
 	$array = ['consumer_key' => CONSUMER_KEY,
 			 'access_token' => '955c00a9-9c76-bd40-69fc-6f6806',
-			 'count' => 10,
+			 'count' => 12,
 			 'detailType' => 'complete'];
 	
 	$array_json = json_encode($array);
