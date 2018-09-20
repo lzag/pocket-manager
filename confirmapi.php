@@ -4,9 +4,9 @@ require 'functions.php';
 
 function registerCode () {
 	global $con;
-	
-	$stmt = $con->prepare('SELECT request_code FROM api_keys WHERE consumer_key = ?');
-	$stmt->execute(array(CONSUMER_KEY));
+	$request_code = $_GET['code'];
+	$stmt = $con->prepare('SELECT request_code FROM api_keys WHERE request_code = ?');
+	$stmt->execute(array($request_code));
 	$code = $stmt->fetch(PDO::FETCH_NUM)[0];
 	
 	print_r($code);
@@ -20,7 +20,7 @@ function registerCode () {
 	curl_setopt($curl, CURLOPT_URL, 'https://getpocket.com/v3/oauth/authorize');
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($curl, CURLOPT_POST, 1);
-	curl_setopt($curl, CURLOPT_POSTFIELDS, 'consumer_key=80613-1e78f4859bf18a4fd2acd8b0&code='.$code);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, 'consumer_key='.CONSUMER_KEY.'&code='.$code);
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 				'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
 				'X-Accept: application/x-www-form-urlencoded'));
