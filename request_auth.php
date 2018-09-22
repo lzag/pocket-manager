@@ -1,13 +1,11 @@
 <?php
 
-session_start();
+require 'init.php';
 
-require 'functions.php';
+function request_auth() {
 
-function cURL() {
-	
     $curl = curl_init();
-	
+
     if (!$curl) {
         die("Couldn't initialize a CURL handle");
 	}
