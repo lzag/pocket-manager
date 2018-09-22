@@ -6,7 +6,7 @@ const CONSUMER_KEY = '80613-c75e5b2f359c163253b130ff';
 
 try
 {
-	$dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME.";";
+    $dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME.";";
 	$con = new PDO($dsn,DB_USER,DB_PASS);
 	$con->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 }

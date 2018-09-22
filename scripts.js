@@ -1,4 +1,4 @@
-function showRecent() {
+function showRecent(e) {
 		let xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
@@ -8,6 +8,8 @@ function showRecent() {
 		xmlhttp.open("GET", "getrecent.php", true);
 
 		xmlhttp.send();
+	document.getElementById('recentPosts').classList.remove('bg-secondary');
+	e.preventDefault();
 	}
 
 function addSite(e) {

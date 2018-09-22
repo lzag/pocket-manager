@@ -1,14 +1,15 @@
 <?php
 
+session_start();
+
 require 'functions.php';
 
 function cURL() {
 	
-	$curl = curl_init();
+    $curl = curl_init();
 	
-	if (!$curl)
-	{
-		die("Couldn't initialize a CURL handle");
+    if (!$curl) {
+        die("Couldn't initialize a CURL handle");
 	}
 
 	curl_setopt($curl, CURLOPT_URL, 'https://getpocket.com/v3/oauth/request');
@@ -21,22 +22,16 @@ function cURL() {
 
 	$output = curl_exec($curl);
 
-	curl_close($curl);
+    curl_close($curl);
 
-	$request_code = (substr($output,5));
-	print_r($output);
-	echo "<br>";
-	print_r($request_code);
+    $request_code = (substr($output, 5));
 
-	global $con;
+    $_SESSION['request_code'] = $request_code;
 
-	$stmt = $con->prepare('INSERT INTO api_keys (request_code) VALUES( ? )' );
-	$stmt->execute(array($request_code));
-
-	header('Location: https://getpocket.com/auth/authorize?request_token='.$request_code.'&redirect_uri=http://localhost/pocket-manager/confirmapi.php?code='.$request_code);
+    header('Location: https://getpocket.com/auth/authorize?request_token='.$request_code.'&redirect_uri=http://localhost/pocket-manager/confirmapi.php?code='.$request_code);
 
 }
 
 cURL();
 
-?>
+
