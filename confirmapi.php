@@ -4,4 +4,4 @@ require 'init.php';
 
 User::registerCode();
 
-header('Location: http://mypocketmanager.lukaszzagroba.com');
+header('Location: http://pocketmanager.lukaszzagroba.com');
