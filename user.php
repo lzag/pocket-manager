@@ -28,7 +28,7 @@ class User
         curl_setopt(
             $curl,
             CURLOPT_POSTFIELDS,
-            'consumer_key='.CONSUMER_KEY.'&redirect_uri=http://localhost/pocket-manager/'
+            'consumer_key='.CONSUMER_KEY.'&redirect_uri=http://pocketmanager.lukaszzagroba.com'
         );
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
@@ -43,7 +43,7 @@ class User
         session_start();
         $_SESSION['request_code'] = $request_code;
 
-        header('Location: https://getpocket.com/auth/authorize?request_token='.$request_code.'&redirect_uri=http://localhost/pocket-manager/confirmapi.php?code='.$request_code);
+        header('Location: https://getpocket.com/auth/authorize?request_token='.$request_code.'&redirect_uri=http://pocketmanager.lukaszzagroba.com/confirmapi.php?code='.$request_code);
 
     }
 
