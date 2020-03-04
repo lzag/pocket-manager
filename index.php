@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <button id="oauth">Click!</button>
     <div class="container">
         <div class="row mb-2">
             <h1 class="text-primary font-weight-bold p-2">Welcome to the Pocket Content Manager</h1>
