@@ -1,4 +1,8 @@
-<?php require 'init.php' ?>
+<?php 
+require 'init.php';
+$api = new \App\Api\Authorization;
+$authorized = $api->checkAuthorization();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +38,7 @@
             </div>
             <div class="col-md-3">
                
-               <?php if (\App\User::checkCredentials()) : ?>
+               <?php if ($authorized) : ?>
                
                 <p>
                     <a class="btn btn-success" href="request_auth.php">App authorized with pocket</a>

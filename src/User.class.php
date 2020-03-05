@@ -4,7 +4,7 @@ namespace App;
 
 class User
 {
-
+    private $consumer_key;
     private $username = '';
     private $access_token = '';
     private $conn;
@@ -14,6 +14,7 @@ class User
         session_start();
         $this->username = $_SESSION['username'];
         $this->access_token = $_SESSION['access_token'];
+        $this->consumer_key = $_ENV['CONSUMER_KEY'];
     }
     
     public static function requestAuth()
@@ -31,7 +32,7 @@ class User
         curl_setopt(
             $curl,
             CURLOPT_POSTFIELDS,
-            'consumer_key='.$config['CONSUMER_KEY'].'&redirect_uri=http://localhost/pocket-manager/'
+            'consumer_key='.$this->consumer_key .'&redirect_uri=http://localhost/pocket-manager/'
         );
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
@@ -46,7 +47,7 @@ class User
         session_start();
         $_SESSION['request_code'] = $request_code;
 
-        header('Location: https://getpocket.com/auth/authorize?request_token='.$request_code.'&redirect_uri=http://localhost/pocket-manager/confirmapi.php?code='.$request_code);
+        header('Location: https://getpocket.com/auth/authorize?request_token='.$request_code.'&redirect_uri=' . confirmapi.php?code='.$request_code);
 
     }
 
@@ -65,7 +66,7 @@ class User
         curl_setopt($curl, CURLOPT_URL, 'https://getpocket.com/v3/oauth/authorize');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, 'consumer_key='.$config['CUSTOMER_KEY'].'&code='.$request_code);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, 'consumer_key='. $this->consumer .'&code='.$request_code);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                                                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
                                                     'X-Accept: application/x-www-form-urlencoded'));
@@ -93,111 +94,5 @@ class User
         }
     }
     
-    public function addSite()
-    {
-
-        $url = $_GET['url'];
-        $title = $_GET['title'];
-
-        $array = [
-                    'url'           => $url,
-                    'title'         => $title,
-                    'consumer_key'  => $config['CONSUMER_KEY'],
-                    'access_token'  => $this->access_token,
-                ];
-
-        $array_json = json_encode($array);
-
-        $curl = curl_init();
-
-        if (!$curl) {
-            
-            die("Couldn't initialize a CURL handle");
-        }
-
-        curl_setopt($curl, CURLOPT_URL, 'https://getpocket.com/v3/add');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $array_json);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json; charset=UTF-8',
-                    'X-Accept: application/json'
-                    ));
-
-        $output = curl_exec($curl);
-
-        curl_close($curl);
-
-        return json_decode($output)->status === 1 ? true : false;
-        
-    }
-
-
-    public function deleteItem()
-    {
-
-        $id = $_GET['id'];
-
-        $array = [[
-                    'action'    => 'delete',
-                    'item_id'   => $id
-                    ],];
-
-        $array_json = urlencode(json_encode($array));
-
-        $curl = curl_init();
-
-        if (!$curl) {
-            
-            die("Couldn't initialize a CURL handle");
-        }
-
-        curl_setopt(
-            $curl,
-            CURLOPT_URL,
-            'https://getpocket.com/v3/send?actions=' . $array_json . '&access_token=' . $this->access_token . '&consumer_key=' . $config['CONSUMER_KEY']
-        );
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-        $output = curl_exec($curl);
-
-        curl_close($curl);
-
-        return json_decode($output)->status === 1 ? true : false;
-    }
     
-    public function getRecent()
-    {
-
-        $array = [
-                    'consumer_key'  => $config['CONSUMER_KEY'],
-                    'access_token'  => $this->access_token,
-                    'count'         => 12,
-                    'detailType'    => 'complete'
-                    ];
-
-        $array_json = json_encode($array);
-
-        $curl = curl_init();
-
-        if (!$curl) {
-            
-            die("Couldn't initialize a CURL handle");
-        }
-
-        curl_setopt($curl, CURLOPT_URL, 'https://getpocket.com/v3/get');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $array_json);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                                                    'Content-Type: application/json',
-                                                    ));
-
-        $output = curl_exec($curl);
-
-        curl_close($curl);
-
-        return json_decode($output)->list;
-        
-    }
 }

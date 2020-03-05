@@ -47,4 +47,9 @@ class Authorization
         return 'https://getpocket.com/auth/authorize?request_token=' . $this->request_code
                 . '&redirect_uri=' . $this->redirect_url . 'confirmapi.php?code=' . $this->request_code;
     }
+
+    public function getAccessToken()
+    {
+        
+    }
 }
