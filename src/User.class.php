@@ -104,7 +104,7 @@ class User
                     'title'         => $title,
                     'consumer_key'  => $config['CONSUMER_KEY'],
                     'access_token'  => $this->access_token,
-                 ];
+                ];
 
         $array_json = json_encode($array);
 
@@ -191,7 +191,7 @@ class User
         curl_setopt($curl, CURLOPT_POSTFIELDS, $array_json);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                                                     'Content-Type: application/json',
-                                                     ));
+                                                    ));
 
         $output = curl_exec($curl);
 

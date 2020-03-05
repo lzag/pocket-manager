@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-3">
                
-               <?php if (User::checkCredentials()) : ?>
+               <?php if (\App\User::checkCredentials()) : ?>
                
                 <p>
                     <a class="btn btn-success" href="request_auth.php">App authorized with pocket</a>
