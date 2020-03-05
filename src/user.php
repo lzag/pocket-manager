@@ -1,7 +1,10 @@
 <?php
 
+namespace App;
+
 class User
 {
+
     private $username = '';
     private $access_token = '';
     private $conn;
@@ -28,7 +31,7 @@ class User
         curl_setopt(
             $curl,
             CURLOPT_POSTFIELDS,
-            'consumer_key='.CONSUMER_KEY.'&redirect_uri=http://localhost/pocket-manager/'
+            'consumer_key='.$config['CONSUMER_KEY'].'&redirect_uri=http://localhost/pocket-manager/'
         );
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
@@ -62,7 +65,7 @@ class User
         curl_setopt($curl, CURLOPT_URL, 'https://getpocket.com/v3/oauth/authorize');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, 'consumer_key='.CONSUMER_KEY.'&code='.$request_code);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, 'consumer_key='.$config['CUSTOMER_KEY'].'&code='.$request_code);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                                                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
                                                     'X-Accept: application/x-www-form-urlencoded'));
@@ -99,7 +102,7 @@ class User
         $array = [
                     'url'           => $url,
                     'title'         => $title,
-                    'consumer_key'  => CONSUMER_KEY,
+                    'consumer_key'  => $config['CONSUMER_KEY'],
                     'access_token'  => $this->access_token,
                  ];
 
@@ -152,7 +155,7 @@ class User
         curl_setopt(
             $curl,
             CURLOPT_URL,
-            'https://getpocket.com/v3/send?actions=' . $array_json . '&access_token=' . $this->access_token . '&consumer_key=' . CONSUMER_KEY
+            'https://getpocket.com/v3/send?actions=' . $array_json . '&access_token=' . $this->access_token . '&consumer_key=' . $config['CONSUMER_KEY']
         );
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
@@ -167,7 +170,7 @@ class User
     {
 
         $array = [
-                    'consumer_key'  => CONSUMER_KEY,
+                    'consumer_key'  => $config['CONSUMER_KEY'],
                     'access_token'  => $this->access_token,
                     'count'         => 12,
                     'detailType'    => 'complete'
